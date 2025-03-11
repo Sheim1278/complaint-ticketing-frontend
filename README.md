@@ -4,15 +4,18 @@ This is the frontend of a Complaint Ticketing and Resolution System, providing a
 
 ## 🎯 Key Features
 ✅ Complaint Submission & Tracking – Users can log complaints, track progress, and get notifications.
+
 ✅ Interactive Dashboard – Displays key complaint statistics and trends.
+
 ✅ Seamless API Integration – Fetches and updates complaints in real-time.
+
 ✅ Modern UI & UX – Built with Bootstrap for a smooth user experience.
+
 ✅ Responsive Design – Works on desktop, tablet, and mobile screens.
+
 ✅ Dark/Light Mode Support (Optional).
 
 ## 📂 Project Structure
-
-
 
 frontend/  
 │── public/                    # Static assets  
@@ -30,20 +33,20 @@ frontend/
 
 ## 💻 How to Run the Project
 1️⃣ Clone the Repository:
+
 bash
-
-
 git clone https://github.com/yourusername/complaint-ticketing-frontend.git  
-cd complaint-ticketing-frontend  
+cd complaint-ticketing-frontend 
+
 2️⃣ Install Dependencies (If using npm or React):
+
 bash
-
-
 npm install  
+
 3️⃣ Start the Development Server:
+
+
 bash
-
-
 npm start  
 OR if it's a static HTML/CSS project, simply open index.html in a browser.
 
@@ -65,6 +68,7 @@ Want to improve the project? Follow these steps:
 1️⃣ Fork the repository 🍴
 2️⃣ Create a new branch 🌿
 3️⃣ Commit your changes 🔄
+
 4️⃣ Push and submit a pull request 🚀
 
 ## 📜 License
