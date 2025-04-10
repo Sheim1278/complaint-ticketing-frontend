@@ -1,13 +1,11 @@
 import { useState } from 'react';
-import { UserRole } from '../types';
 import { User, Key, Mail } from 'lucide-react';
 
 interface LoginFormProps {
-  role: UserRole;
   onLogin: (username: string, password: string) => void;
 }
 
-export default function LoginForm({ role, onLogin }: LoginFormProps) {
+export default function LoginForm({ onLogin }: LoginFormProps) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -26,27 +24,27 @@ export default function LoginForm({ role, onLogin }: LoginFormProps) {
       <div className="backdrop-blur-md bg-white/10 p-8 rounded-2xl shadow-xl border border-white/20">
         <div className="flex flex-col items-center mb-8">
           <div className="w-20 h-20 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mb-4">
-            {role === 'student' ? (
-              <User className="h-10 w-10 text-white" />
-            ) : (
-              <Key className="h-10 w-10 text-white" />
-            )}
+
+            <User className="h-10 w-10 text-white" />
+
+            <Key className="h-10 w-10 text-white" />
+
           </div>
           <h2 className="text-3xl font-bold text-white text-center">
-            {role === 'student' ? 'Student Login' : 'Admin Login'}
+            Login
           </h2>
           <p className="mt-2 text-center text-purple-200">
-            Please sign in to continue to the {role} dashboard
+            Please sign in to continue
           </p>
         </div>
-        
+
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           {error && (
             <div className="text-pink-300 text-sm text-center bg-pink-900/20 py-2 rounded-lg">
               {error}
             </div>
           )}
-          
+
           <div className="space-y-4">
             <div className="relative">
               <label htmlFor="username" className="block text-sm font-medium text-purple-200 mb-1">
@@ -68,7 +66,7 @@ export default function LoginForm({ role, onLogin }: LoginFormProps) {
                 />
               </div>
             </div>
-            
+
             <div className="relative">
               <label htmlFor="password" className="block text-sm font-medium text-purple-200 mb-1">
                 Password
@@ -100,13 +98,13 @@ export default function LoginForm({ role, onLogin }: LoginFormProps) {
             </button>
           </div>
 
-          {role === 'student' && (
-            <div className="text-center mt-4">
-              <a href="#" className="text-sm text-purple-200 hover:text-white">
-                Forgot your password?
-              </a>
-            </div>
-          )}
+
+          <div className="text-center mt-4">
+            <a href="#" className="text-sm text-purple-200 hover:text-white">
+              Forgot your password?
+            </a>
+          </div>
+
         </form>
       </div>
     </div>

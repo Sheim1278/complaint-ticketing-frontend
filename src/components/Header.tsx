@@ -20,13 +20,13 @@ export default function Header({ user, onLogout, notifications = [], onNotificat
   };
 
   return (
-    <header className="bg-white shadow-sm relative">
+    <header className="from-purple-800 to-purple-700 bg-gradient-to-b shadow-sm relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Menu className="h-6 w-6 text-gray-500 sm:hidden" />
-            <h1 className="ml-2 text-xl font-bold text-gray-900">
-              Student Support Hub
+            <h1 className="ml-2 text-xl font-bold text-gray-900 ">
+              Consumer Support
             </h1>
           </div>
           

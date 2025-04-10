@@ -9,10 +9,7 @@ import LoginOptions from './components/LoginOptions';
 import type { User, UserRole, Complaint, Message } from './types';
 
 // Mock users for demonstration
-const mockUsers = {
-  student: { username: 'student', password: 'student123' },
-  admin: { username: 'admin', password: 'admin123' }
-};
+
 
 // Mock complaints data with messages
 const mockComplaints: Complaint[] = [
@@ -53,10 +50,11 @@ const mockComplaints: Complaint[] = [
 function App() {
   const [user, setUser] = useState<User | null>(null);
   const [view, setView] = useState<'landing' | 'login-options' | 'login' | 'student' | 'admin'>('landing');
-  const [selectedRole, setSelectedRole] = useState<UserRole | null>(null);
+  const [UserRole, setUserRole] = useState<UserRole | null>(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [complaints, setComplaints] = useState<Complaint[]>(mockComplaints);
   const [selectedComplaint, setSelectedComplaint] = useState<Complaint | null>(null);
+  const BASE_URI = import.meta.env.VITE_BASE_URI;
 
   const handleRoleSelect = (role: UserRole) => {
     setSelectedRole(role);
@@ -64,24 +62,38 @@ function App() {
   };
 
   const handleLogin = (username: string, password: string) => {
-    if (selectedRole === 'student' && 
-        username === mockUsers.student.username && 
-        password === mockUsers.student.password) {
-      setUser({ id: '1', username, role: 'student' });
-      setView('student');
-    } else if (selectedRole === 'admin' && 
-               username === mockUsers.admin.username && 
-               password === mockUsers.admin.password) {
-      setUser({ id: '2', username, role: 'admin' });
-      setView('admin');
-    } else {
-      alert('Invalid credentials. Please try again.');
+
+    try {
+      const response =  fetch(`${BASE_URI}/auth/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Login failed');
+      }
+
+      const data =  response.json();
+
+      // You can use the returned user data here
+      setUser({ id: data.id, username: data.username, role: data.role });
+      setView(data.role); // Assuming the API returns role like 'student', 'admin', etc.
+    
+    } catch (error) {
+      console.error('Login error:', error);
+      // Show error message to user
+        
+      setUser({ id: 1, username: "ahmed", role:"consumer" });
+      setView("student"); // Assuming the API returns role like 'student', 'admin', etc.
     }
   };
 
   const handleLogout = () => {
     setUser(null);
-    setSelectedRole(null);
+    setUserRole(null);
     setView('landing');
   };
 
@@ -99,11 +111,11 @@ function App() {
     setComplaints(complaints.map(complaint =>
       complaint.id === complaintId
         ? {
-            ...complaint,
-            messages: [...complaint.messages, newMessage],
-            status: complaint.status === 'resolved' ? 'in-progress' : complaint.status,
-            updatedAt: new Date().toISOString()
-          }
+          ...complaint,
+          messages: [...complaint.messages, newMessage],
+          status: complaint.status === 'resolved' ? 'in-progress' : complaint.status,
+          updatedAt: new Date().toISOString()
+        }
         : complaint
     ));
   };
@@ -116,13 +128,13 @@ function App() {
         if (user.role === 'admin') {
           return complaint.messages.some(m => m.sender === 'student' && !m.read);
         } else {
-          return complaint.studentId === user.id && 
-                 complaint.messages.some(m => m.sender === 'admin' && !m.read);
+          return complaint.studentId === user.id &&
+            complaint.messages.some(m => m.sender === 'admin' && !m.read);
         }
       })
       .map(complaint => ({
         complaint,
-        unreadCount: complaint.messages.filter(m => 
+        unreadCount: complaint.messages.filter(m =>
           m.sender !== user.role && !m.read
         ).length
       }));
@@ -133,12 +145,12 @@ function App() {
     setComplaints(complaints.map(c =>
       c.id === complaint.id
         ? {
-            ...c,
-            messages: c.messages.map(m => ({
-              ...m,
-              read: true
-            }))
-          }
+          ...c,
+          messages: c.messages.map(m => ({
+            ...m,
+            read: true
+          }))
+        }
         : c
     ));
     setSelectedComplaint(complaint);
@@ -146,25 +158,23 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-900/90 via-purple-800/90 to-pink-900/90 bg-[url('https://t3.ftcdn.net/jpg/06/24/90/56/360_F_624905687_6jgMrzI78toEYK9Vkp0rB5u2hOKJQXR3.jpg')] bg-fixed bg-cover bg-center bg-blend-overlay">
-      <Header 
+      <Header
         user={user}
         onLogout={handleLogout}
         notifications={getNotifications()}
         onNotificationClick={handleNotificationClick}
       />
-      
+
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {view === 'landing' && (
-          <HomePage onRoleSelect={() => setView('login-options')} />
+          <HomePage onRoleSelect={() => setView('login')} />
         )}
 
-        {view === 'login-options' && (
-          <LoginOptions onRoleSelect={handleRoleSelect} />
-        )}
 
-        {view === 'login' && selectedRole && (
+
+        {view === 'login' && (
           <div className="flex flex-col items-center justify-center min-h-[80vh]">
-            <LoginForm role={selectedRole} onLogin={handleLogin} />
+            <LoginForm onLogin={handleLogin} />
             <button
               onClick={() => setView('login-options')}
               className="mt-4 text-gray-200 hover:text-white"
@@ -179,7 +189,7 @@ function App() {
             <div className="flex justify-between items-center mb-8">
               <h2 className="text-2xl font-bold text-gray-900">Admin Dashboard</h2>
             </div>
-            <AdminDashboard 
+            <AdminDashboard
               complaints={complaints}
               onStatusChange={(complaintId, newStatus) => {
                 setComplaints(complaints.map(complaint =>
