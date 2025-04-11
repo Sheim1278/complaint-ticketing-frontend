@@ -38,12 +38,12 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
 const currentYear = new Date().getFullYear();
 
 const categories = {
-  academic: 'Academic Issues',
-  technical: 'Technical Problems',
-  facilities: 'Campus Facilities',
-  administrative: 'Administrative',
-  financial: 'Financial Aid',
-  library: 'Library Services',
+  academic: 'Account Issues',
+  technical: 'CONTACT Problems',
+  facilities: 'FEEDBACK Problems',
+  administrative: 'ORDER',
+  financial: 'REFUND',
+  library: 'SHIPPING',
   other: 'Other'
 };
 
@@ -330,7 +330,7 @@ export default function AdminDashboard({ complaints, onStatusChange, onSendMessa
 
         <div className="bg-white p-6 rounded-lg shadow">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-medium text-gray-900">Student Satisfaction Trend</h3>
+            <h3 className="text-lg font-medium text-gray-900">Cosumter Satisfaction Trend</h3>
             <button
               onClick={() => downloadDashboardSection('satisfaction-trend', 'satisfaction-trend')}
               className="p-2 text-gray-500 hover:text-gray-700"

@@ -7,45 +7,9 @@ import ComplaintCard from './components/ComplaintCard';
 import HomePage from './components/HomePage';
 import LoginOptions from './components/LoginOptions';
 import type { User, UserRole, Complaint, Message } from './types';
+import ComplaintModal from "./components/ComplaintModal"
 
-// Mock users for demonstration
 
-
-// // Mock complaints data with messages
-// const mockComplaints: Complaint[] = [
-//   {
-//     id: '1',
-//     title: 'Course Registration Issue',
-//     description: 'Unable to register for required courses',
-//     category: 'academic',
-//     status: 'pending',
-//     priority: 'high',
-//     createdAt: '2024-03-10T10:00:00Z',
-//     updatedAt: '2024-03-10T10:00:00Z',
-//     studentId: '12345',
-//     messages: []
-//   },
-//   {
-//     id: '2',
-//     title: 'Library Access Problem',
-//     description: 'Cannot access online library resources',
-//     category: 'technical',
-//     status: 'in-progress',
-//     priority: 'medium',
-//     createdAt: '2024-03-09T15:30:00Z',
-//     updatedAt: '2024-03-10T09:00:00Z',
-//     studentId: '12346',
-//     messages: [
-//       {
-//         id: '1',
-//         content: 'We are working with the library IT team to resolve your access issue.',
-//         sender: 'admin',
-//         timestamp: '2024-03-10T09:00:00Z',
-//         read: false
-//       }
-//     ]
-//   }
-// ];
 
 function App() {
   const [user, setUser] = useState<User | null>(null);
@@ -55,11 +19,17 @@ function App() {
   const [selectedComplaint, setSelectedComplaint] = useState<Complaint | null>(null);
   const BASE_URI = import.meta.env.VITE_BASE_URI;
 
+  const [isModalOpen, setModalOpen] = useState(false);
+
   const handleRoleSelect = (role: UserRole) => {
     setSelectedRole(role);
     setView('login');
   };
 
+  const handleView = (complaint: Complaint) => {
+    setSelectedComplaint(complaint);
+    setModalOpen(true);
+  };
   const handleLogin = async (username: string, password: string) => {
 
     try {
@@ -88,11 +58,12 @@ function App() {
 
   const handleLogout = () => {
     setUser(null);
-    setUserRole(null);
     setView('landing');
   };
 
   const fetchComplaints = async () => {
+    if (user === null)
+      return;
     try {
       if (!user.access_token) {
         console.error('Access token is missing');
@@ -145,49 +116,13 @@ function App() {
     // setComplaintId('');
   };
 
-  const getNotifications = () => {
-    if (!user) return [];
 
-    return complaints
-      .filter(complaint => {
-        if (user.role === 'admin') {
-          return complaint.messages.some(m => m.sender === 'student' && !m.read);
-        } else {
-          return complaint.studentId === user.id &&
-            complaint.messages.some(m => m.sender === 'admin' && !m.read);
-        }
-      })
-      .map(complaint => ({
-        complaint,
-        unreadCount: complaint.messages.filter(m =>
-          m.sender !== user.role && !m.read
-        ).length
-      }));
-  };
-
-  const handleNotificationClick = (complaint: Complaint) => {
-    // Mark messages as read
-    setComplaints(complaints.map(c =>
-      c.id === complaint.id
-        ? {
-          ...c,
-          messages: c.messages.map(m => ({
-            ...m,
-            read: true
-          }))
-        }
-        : c
-    ));
-    setSelectedComplaint(complaint);
-  };
-
+ 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-900/90 via-purple-800/90 to-pink-900/90 bg-[url('https://t3.ftcdn.net/jpg/06/24/90/56/360_F_624905687_6jgMrzI78toEYK9Vkp0rB5u2hOKJQXR3.jpg')] bg-fixed bg-cover bg-center bg-blend-overlay">
+    <div className="min-h-screen bg-gradient-to-br">
       <Header
         user={user}
         onLogout={handleLogout}
-        notifications={getNotifications()}
-        onNotificationClick={handleNotificationClick}
       />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -201,8 +136,8 @@ function App() {
           <div className="flex flex-col items-center justify-center min-h-[80vh]">
             <LoginForm onLogin={handleLogin} />
             <button
-              onClick={() => setView('login-options')}
-              className="mt-4 text-gray-200 hover:text-white"
+              onClick={() => setView('landing')}
+              className="mt-4  hover:text-blue-700"
             >
               Back to Portal Selection
             </button>
@@ -235,7 +170,7 @@ function App() {
               <h2 className="text-2xl font-bold text-gray-900">My Complaints</h2>
               <button
                 onClick={() => setIsFormOpen(!isFormOpen)}
-                className="px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-md hover:from-purple-700 hover:to-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+                className="px-4 py-2 bg-gradient-to-r from-cyan-600 to-blue-600 text-white rounded-md hover:from-cyan-700 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
               >
                 {isFormOpen ? 'Close Form' : 'New Complaint'}
               </button>
@@ -256,9 +191,16 @@ function App() {
                     complaint={complaint}
                     userRole="client"
                     onSendMessage={handleSendMessage}
+                    onView={handleView}
                   />
                 ))}
             </div>
+            <ComplaintModal
+              isOpen={isModalOpen}
+              onClose={() => setModalOpen(false)}
+              complaint={selectedComplaint}
+              user={user}
+            />
           </div>
         )}
       </main>

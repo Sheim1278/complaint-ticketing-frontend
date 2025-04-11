@@ -19,6 +19,7 @@ export interface Complaint {
   admin_response: string;
   user_id: number;
   department_id: number | null;
+  sub_category:string;
 }
 
 export interface User {
