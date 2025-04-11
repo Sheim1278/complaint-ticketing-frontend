@@ -5,10 +5,9 @@ import type { User, Complaint, Message } from '../types';
 interface HeaderProps {
   user: User | null;
   onLogout: () => void;
-  notifications: { complaint: Complaint; unreadCount: number }[];
 }
 
-export default function Header({ user, onLogout, }: HeaderProps) {
+export default function Header({ user, onLogout,  }: HeaderProps) {
 
 
  

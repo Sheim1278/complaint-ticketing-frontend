@@ -81,17 +81,11 @@ export default function ComplaintModal({ isOpen, onClose, complaint, user }: Com
                         </div>
                     )}
 
-                    <div>
+                    {complaint.admin_response !== "Pending" && (<div >
                         <h4 className="text-sm font-semibold text-gray-700 mb-1">Human Response:</h4>
-                        <textarea
-                            value={humanResponse}
-                            onChange={(e) => setHumanResponse(e.target.value)}
-                            placeholder="Write a response here..."
-                            className="w-full p-2 border border-gray-300 rounded-md"
-                            disabled
-                        />
-                    </div>
-
+                        <p className="text-gray-600">{complaint.admin_response}</p>
+                    </div>)
+                    }
                     <div className="pt-4 border-t border-gray-200">
                         <p className="text-sm font-medium text-gray-800 mb-2">Were you satisfied with the answer?</p>
                         <div className="flex justify-center gap-4">

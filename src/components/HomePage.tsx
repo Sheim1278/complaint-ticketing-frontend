@@ -21,7 +21,7 @@ export default function HomePage({ onRoleSelect }: HomePageProps) {
             onClick={() => onRoleSelect()}
             className="px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white text-xl font-semibold rounded-full hover:from-cyan-600 hover:to-blue-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
           >
-            Submit Ticket
+            Login In
           </button>
         </div>
       </div>

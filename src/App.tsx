@@ -16,8 +16,8 @@ function App() {
   const [view, setView] = useState<'landing' | 'login-options' | 'login' | 'client' | 'admin'>('landing');
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [complaints, setComplaints] = useState<Complaint[]>([]);
-  const [selectedComplaint, setSelectedComplaint] = useState<Complaint | null>(null);
   const BASE_URI = import.meta.env.VITE_BASE_URI;
+  const [selectedComplaint, setSelectedComplaint] = useState<Complaint | null>(null);
 
   const [isModalOpen, setModalOpen] = useState(false);
 
@@ -48,8 +48,14 @@ function App() {
       const data = await response.json();
 
       setUser({ id: data.id, username: data.username, role: data.role, access_token: data.access_token });
+      console.log(data);
       fetchComplaints();
-      setView(data.role); // e.g. 'student', 'admin', etc.
+      if (data.role !== "client") {
+        setView("admin"); // e.g. 'student', 'admin', etc.
+      }
+      else {
+        setView("client")
+      }
     } catch (error) {
       console.error('Login error:', error);
 
@@ -63,6 +69,8 @@ function App() {
 
   const fetchComplaints = async () => {
     if (user === null)
+      return;
+    if (user.role === "admin")
       return;
     try {
       if (!user.access_token) {
@@ -83,6 +91,7 @@ function App() {
       }
 
       const data = await response.json();
+      console.log(data);
       setComplaints(data); // Set complaints data
     } catch (error) {
       console.error('Error fetching complaints:', error);
@@ -117,7 +126,7 @@ function App() {
   };
 
 
- 
+
   return (
     <div className="min-h-screen bg-gradient-to-br">
       <Header
@@ -146,11 +155,10 @@ function App() {
 
         {user && view === 'admin' && (
           <div className="backdrop-blur-sm bg-white/90 rounded-xl p-8">
-            <div className="flex justify-between items-center mb-8">
-              <h2 className="text-2xl font-bold text-gray-900">Admin Dashboard</h2>
-            </div>
+            
             <AdminDashboard
               complaints={complaints}
+              user={user}
               onStatusChange={(complaintId, newStatus) => {
                 setComplaints(complaints.map(complaint =>
                   complaint.id === complaintId
@@ -161,7 +169,9 @@ function App() {
               onSendMessage={handleSendMessage}
               userRole="admin"
             />
+
           </div>
+
         )}
 
         {user && view === 'client' && (

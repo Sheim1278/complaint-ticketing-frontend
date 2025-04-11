@@ -59,7 +59,7 @@ export default function ComplaintCard({ complaint, userRole, onView }: Complaint
       <div className="flex items-center justify-between text-sm text-gray-500 mt-4">
         <div className="flex items-center">
           <MessageCircle className="h-4 w-4 mr-1" />
-          <span>Category: {complaint.category}</span>
+          <span>Sub Category: {complaint.sub_category}</span>
         </div>
       </div>
     </div>
