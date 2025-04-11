@@ -1,22 +1,15 @@
 import { useState } from 'react';
 import html2canvas from 'html2canvas';
+import { user } from "src/types";
+interface ComplaintFormProps {
+  user: User;
+}
+export default function ComplaintForm({ user }: ComplaintFormProps) {
+  // Client Information
 
-export default function ComplaintForm() {
-  // Student Information
-  const [studentId, setStudentId] = useState('');
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [gpa, setGpa] = useState('');
-  const [academicYear, setAcademicYear] = useState('');
-  const [age, setAge] = useState('');
-  const [gender, setGender] = useState('');
-  const [nationality, setNationality] = useState('');
-  const [college, setCollege] = useState('');
-  
   // Complaint Information
   const [category, setCategory] = useState('');
   const [description, setDescription] = useState('');
-  const [suggestSolution, setSuggestSolution] = useState('');
   const [isSatisfied, setIsSatisfied] = useState<boolean | null>(null);
   const [dissatisfactionCategory, setDissatisfactionCategory] = useState('');
   const [dissatisfactionFeedback, setDissatisfactionFeedback] = useState('');
@@ -51,37 +44,52 @@ export default function ComplaintForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const ticketId = `TKT-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
-    
-    const complaintData = {
-      studentInfo: {
-        studentId,
-        name,
-        email,
-        gpa,
-        academicYear,
-        age,
-        gender,
-        nationality,
-        college
-      },
-      complaint: {
-        category,
-        description,
-        suggestSolution
+    // Construct the data payload
+    const complaintPayload = {
+      title: category, // Assuming 'category' is the complaint title
+      description: description,
+      number_of_complaints: 1
+    };
+
+    try {
+
+      const response = await fetch("http://127.0.0.1:5000/complaint/addcomplaint", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${user.access_token}`
+        },
+        body: JSON.stringify(complaintPayload)
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit complaint");
       }
-    };
 
-    const ticketResponse = {
-      ticketId,
-      createdAt: new Date().toISOString(),
-      estimatedResolutionTime: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-      currentSolution: "Our team is reviewing your complaint. We will provide a detailed solution soon.",
-      ...complaintData,
-    };
+      const data = await response.json();
 
-    setComplaintTicket(ticketResponse);
-    await sendConfirmationEmail(ticketResponse);
+      const ticketResponse = {
+        ticketId: `TKT-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+        createdAt: new Date().toISOString(),
+        estimatedResolutionTime: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+        currentSolution: data.response,
+        clientInfo: {
+          clientId:user.id,
+          name:user.username,
+         
+        },
+        complaint: {
+          category: data.category,
+          description: data.description,
+          suggestSolution:""
+        }
+      };
+
+      setComplaintTicket(ticketResponse);
+    
+    } catch (error) {
+      console.error("Error submitting complaint:", error);
+    }
   };
 
   const handleFeedbackSubmit = () => {
@@ -95,157 +103,10 @@ export default function ComplaintForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-8 bg-white p-6 rounded-lg shadow">
-      {/* Student Information Section */}
-      <div className="space-y-6">
-        <h3 className="text-lg font-medium text-gray-900 border-b pb-2">Student Information</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label htmlFor="studentId" className="block text-sm font-medium text-gray-700">
-              Student ID
-            </label>
-            <input
-              type="text"
-              id="studentId"
-              value={studentId}
-              onChange={(e) => setStudentId(e.target.value)}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-              required
-            />
-          </div>
+      {/* Client Information Section */}
 
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-              required
-            />
-          </div>
 
-          <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-              Full Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-              required
-            />
-          </div>
 
-          <div>
-            <label htmlFor="college" className="block text-sm font-medium text-gray-700">
-              College
-            </label>
-            <select
-              id="college"
-              value={college}
-              onChange={(e) => setCollege(e.target.value)}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-              required
-            >
-              <option value="">Select college</option>
-              <option value="engineering">Engineering</option>
-              <option value="science">Science</option>
-              <option value="business">Business</option>
-              <option value="arts">Arts</option>
-              <option value="medicine">Medicine</option>
-            </select>
-          </div>
-
-          <div>
-            <label htmlFor="gpa" className="block text-sm font-medium text-gray-700">
-              GPA
-            </label>
-            <input
-              type="number"
-              id="gpa"
-              step="0.01"
-              min="0"
-              max="4"
-              value={gpa}
-              onChange={(e) => setGpa(e.target.value)}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-              required
-            />
-          </div>
-
-          <div>
-            <label htmlFor="academicYear" className="block text-sm font-medium text-gray-700">
-              Academic Year
-            </label>
-            <select
-              id="academicYear"
-              value={academicYear}
-              onChange={(e) => setAcademicYear(e.target.value)}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-              required
-            >
-              <option value="">Select year</option>
-              <option value="1">First Year</option>
-              <option value="2">Second Year</option>
-              <option value="3">Third Year</option>
-              <option value="4">Fourth Year</option>
-              <option value="5">Fifth Year</option>
-            </select>
-          </div>
-
-          <div>
-            <label htmlFor="age" className="block text-sm font-medium text-gray-700">
-              Age
-            </label>
-            <input
-              type="number"
-              id="age"
-              min="16"
-              max="100"
-              value={age}
-              onChange={(e) => setAge(e.target.value)}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-              required
-            />
-          </div>
-
-          <div>
-            <label htmlFor="gender" className="block text-sm font-medium text-gray-700">
-              Gender
-            </label>
-            <select
-              id="gender"
-              value={gender}
-              onChange={(e) => setGender(e.target.value)}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-              required
-            >
-              <option value="">Select gender</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-            </select>
-          </div>
-
-          <div>
-            <label htmlFor="nationality" className="block text-sm font-medium text-gray-700">
-              Nationality
-            </label>
-            <input
-              type="text"
-              id="nationality"
-              value={nationality}
-              onChange={(e) => setNationality(e.target.value)}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-              required
-            />
-          </div>
-        </div>
-      </div>
 
       {/* Complaint Information Section */}
       <div className="space-y-6">
@@ -253,21 +114,17 @@ export default function ComplaintForm() {
         <div className="space-y-6">
           <div>
             <label htmlFor="category" className="block text-sm font-medium text-gray-700">
-              Category
+              Title
             </label>
-            <select
-              id="category"
+            <input
+              id="title"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
               required
             >
-              <option value="">Select a category</option>
-              <option value="academic">Academic</option>
-              <option value="technical">Technical</option>
-              <option value="facilities">Facilities</option>
-              <option value="other">Other</option>
-            </select>
+
+            </input>
           </div>
 
           <div>
@@ -284,19 +141,6 @@ export default function ComplaintForm() {
             />
           </div>
 
-          <div>
-            <label htmlFor="suggestSolution" className="block text-sm font-medium text-gray-700">
-              Suggest Solution
-            </label>
-            <textarea
-              id="suggestSolution"
-              value={suggestSolution}
-              onChange={(e) => setSuggestSolution(e.target.value)}
-              rows={4}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-              required
-            />
-          </div>
         </div>
       </div>
 
@@ -327,8 +171,8 @@ export default function ComplaintForm() {
                   <p className="text-gray-700">{complaintTicket.complaint.category}</p>
                 </div>
                 <div>
-                  <p className="font-semibold">Student Name:</p>
-                  <p className="text-gray-700">{complaintTicket.studentInfo.name}</p>
+                  <p className="font-semibold">Client Name:</p>
+                  <p className="text-gray-700">{complaintTicket.clientInfo.name}</p>
                 </div>
                 <div className="col-span-2">
                   <p className="font-semibold">Current Status:</p>
@@ -362,22 +206,20 @@ export default function ComplaintForm() {
                   <button
                     type="button"
                     onClick={() => setIsSatisfied(true)}
-                    className={`px-4 py-2 rounded-md ${
-                      isSatisfied === true
-                        ? 'bg-green-600 text-white'
-                        : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
-                    }`}
+                    className={`px-4 py-2 rounded-md ${isSatisfied === true
+                      ? 'bg-green-600 text-white'
+                      : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
+                      }`}
                   >
                     Yes
                   </button>
                   <button
                     type="button"
                     onClick={() => setIsSatisfied(false)}
-                    className={`px-4 py-2 rounded-md ${
-                      isSatisfied === false
-                        ? 'bg-red-600 text-white'
-                        : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
-                    }`}
+                    className={`px-4 py-2 rounded-md ${isSatisfied === false
+                      ? 'bg-red-600 text-white'
+                      : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
+                      }`}
                   >
                     No
                   </button>

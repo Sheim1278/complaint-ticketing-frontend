@@ -10,7 +10,7 @@ const statusColors = {
 
 interface ComplaintCardProps {
   complaint: Complaint;
-  userRole: 'student' | 'admin';
+  userRole: 'student' | 'client';
   onSendMessage: (complaintId: string, message: string) => void;
 }
 
@@ -30,43 +30,31 @@ export default function ComplaintCard({ complaint, userRole, onSendMessage }: Co
       <div className="flex justify-between items-start mb-4">
         <h3 className="text-lg font-semibold text-gray-900">{complaint.title}</h3>
         <span className={`px-3 py-1 rounded-full text-sm font-medium ${statusColors[complaint.status]}`}>
-          {complaint.status}
+          {complaint.category}
         </span>
       </div>
-      
+
       <p className="text-gray-600 mb-4 line-clamp-2">{complaint.description}</p>
-      
-      {complaint.messages.length > 0 && (
+
+      {complaint.ai_response.length > 0 && (
         <div className="mb-4">
           <button
             onClick={() => setIsExpanded(!isExpanded)}
             className="text-sm text-blue-600 hover:text-blue-800 mb-2"
           >
-            {isExpanded ? 'Show Less' : `Show Conversation (${complaint.messages.length})`}
+            {isExpanded ? 'Show Less' : `Show Conversation (${complaint.ai_response.length})`}
           </button>
-          
+
           {isExpanded && (
-            <div className="space-y-3 max-h-60 overflow-y-auto">
-              {complaint.messages.map((message) => (
-                <div
-                  key={message.id}
-                  className={`p-3 rounded-lg ${
-                    message.sender === userRole
-                      ? 'bg-blue-50 ml-8'
-                      : 'bg-gray-50 mr-8'
-                  }`}
-                >
-                  <p className="text-sm text-gray-900">{message.content}</p>
-                  <p className="text-xs text-gray-500 mt-1">
-                    {new Date(message.timestamp).toLocaleString()}
-                  </p>
-                </div>
-              ))}
+            <div className="space-y-3 max-h-60 overflow-y-auto truncate">
+                asdasd
+
+
             </div>
           )}
         </div>
       )}
-      
+
       <div className="mt-4">
         <div className="flex space-x-2">
           <input
@@ -85,13 +73,12 @@ export default function ComplaintCard({ complaint, userRole, onSendMessage }: Co
           </button>
         </div>
       </div>
-      
+
       <div className="flex items-center justify-between text-sm text-gray-500 mt-4">
         <div className="flex items-center">
           <Clock className="h-4 w-4 mr-1" />
-          <span>{new Date(complaint.createdAt).toLocaleDateString()}</span>
         </div>
-        
+
         <div className="flex items-center">
           <MessageCircle className="h-4 w-4 mr-1" />
           <span>Category: {complaint.category}</span>

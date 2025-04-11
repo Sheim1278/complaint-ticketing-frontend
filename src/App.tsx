@@ -11,48 +11,47 @@ import type { User, UserRole, Complaint, Message } from './types';
 // Mock users for demonstration
 
 
-// Mock complaints data with messages
-const mockComplaints: Complaint[] = [
-  {
-    id: '1',
-    title: 'Course Registration Issue',
-    description: 'Unable to register for required courses',
-    category: 'academic',
-    status: 'pending',
-    priority: 'high',
-    createdAt: '2024-03-10T10:00:00Z',
-    updatedAt: '2024-03-10T10:00:00Z',
-    studentId: '12345',
-    messages: []
-  },
-  {
-    id: '2',
-    title: 'Library Access Problem',
-    description: 'Cannot access online library resources',
-    category: 'technical',
-    status: 'in-progress',
-    priority: 'medium',
-    createdAt: '2024-03-09T15:30:00Z',
-    updatedAt: '2024-03-10T09:00:00Z',
-    studentId: '12346',
-    messages: [
-      {
-        id: '1',
-        content: 'We are working with the library IT team to resolve your access issue.',
-        sender: 'admin',
-        timestamp: '2024-03-10T09:00:00Z',
-        read: false
-      }
-    ]
-  }
-];
+// // Mock complaints data with messages
+// const mockComplaints: Complaint[] = [
+//   {
+//     id: '1',
+//     title: 'Course Registration Issue',
+//     description: 'Unable to register for required courses',
+//     category: 'academic',
+//     status: 'pending',
+//     priority: 'high',
+//     createdAt: '2024-03-10T10:00:00Z',
+//     updatedAt: '2024-03-10T10:00:00Z',
+//     studentId: '12345',
+//     messages: []
+//   },
+//   {
+//     id: '2',
+//     title: 'Library Access Problem',
+//     description: 'Cannot access online library resources',
+//     category: 'technical',
+//     status: 'in-progress',
+//     priority: 'medium',
+//     createdAt: '2024-03-09T15:30:00Z',
+//     updatedAt: '2024-03-10T09:00:00Z',
+//     studentId: '12346',
+//     messages: [
+//       {
+//         id: '1',
+//         content: 'We are working with the library IT team to resolve your access issue.',
+//         sender: 'admin',
+//         timestamp: '2024-03-10T09:00:00Z',
+//         read: false
+//       }
+//     ]
+//   }
+// ];
 
 function App() {
   const [user, setUser] = useState<User | null>(null);
-  const [view, setView] = useState<'landing' | 'login-options' | 'login' | 'student' | 'admin'>('landing');
-  const [UserRole, setUserRole] = useState<UserRole | null>(null);
+  const [view, setView] = useState<'landing' | 'login-options' | 'login' | 'client' | 'admin'>('landing');
   const [isFormOpen, setIsFormOpen] = useState(false);
-  const [complaints, setComplaints] = useState<Complaint[]>(mockComplaints);
+  const [complaints, setComplaints] = useState<Complaint[]>([]);
   const [selectedComplaint, setSelectedComplaint] = useState<Complaint | null>(null);
   const BASE_URI = import.meta.env.VITE_BASE_URI;
 
@@ -61,10 +60,10 @@ function App() {
     setView('login');
   };
 
-  const handleLogin = (username: string, password: string) => {
+  const handleLogin = async (username: string, password: string) => {
 
     try {
-      const response =  fetch(`${BASE_URI}/auth/login`, {
+      const response = await fetch(`${BASE_URI}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -76,18 +75,14 @@ function App() {
         throw new Error('Login failed');
       }
 
-      const data =  response.json();
+      const data = await response.json();
 
-      // You can use the returned user data here
-      setUser({ id: data.id, username: data.username, role: data.role });
-      setView(data.role); // Assuming the API returns role like 'student', 'admin', etc.
-    
+      setUser({ id: data.id, username: data.username, role: data.role, access_token: data.access_token });
+      fetchComplaints();
+      setView(data.role); // e.g. 'student', 'admin', etc.
     } catch (error) {
       console.error('Login error:', error);
-      // Show error message to user
-        
-      setUser({ id: 1, username: "ahmed", role:"consumer" });
-      setView("student"); // Assuming the API returns role like 'student', 'admin', etc.
+
     }
   };
 
@@ -97,27 +92,57 @@ function App() {
     setView('landing');
   };
 
-  const handleSendMessage = (complaintId: string, content: string) => {
-    if (!user) return;
+  const fetchComplaints = async () => {
+    try {
+      if (!user.access_token) {
+        console.error('Access token is missing');
+        return;
+      }
+      console.log(user.access_token);  // Check if the token is present
+      const response = await fetch(`${BASE_URI}/complaint/allcomplaints`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${user.access_token}`,
+          'Content-Type': 'application/json',
+        },
+      });
 
-    const newMessage: Message = {
-      id: `msg-${Date.now()}`,
-      content,
-      sender: user.role,
-      timestamp: new Date().toISOString(),
-      read: false
-    };
+      if (!response.ok) {
+        throw new Error('Failed to fetch complaints');
+      }
 
+      const data = await response.json();
+      setComplaints(data); // Set complaints data
+    } catch (error) {
+      console.error('Error fetching complaints:', error);
+      // setError('Failed to load complaints');
+    } finally {
+      // setLoading(false); // Set loading to false after data is fetched
+    }
+  };
+
+  // Call fetchComplaints when component mounts
+  useEffect(() => {
+    fetchComplaints();
+  }, [user]);
+
+  // Function to handle sending a message and updating the complaint
+  const handleSendMessage = (complaintId: string) => {
+    // Update the complaints list with new message and status
     setComplaints(complaints.map(complaint =>
       complaint.id === complaintId
         ? {
           ...complaint,
-          messages: [...complaint.messages, newMessage],
-          status: complaint.status === 'resolved' ? 'in-progress' : complaint.status,
-          updatedAt: new Date().toISOString()
+          messages: [...complaint.messages, newMessage], // Add new message
+          status: complaint.status === 'resolved' ? 'in-progress' : complaint.status, // Update status
+          updatedAt: new Date().toISOString(), // Update the timestamp
         }
         : complaint
     ));
+
+    // Clear the message input
+    // setNewMessage('');
+    // setComplaintId('');
   };
 
   const getNotifications = () => {
@@ -204,7 +229,7 @@ function App() {
           </div>
         )}
 
-        {user && view === 'student' && (
+        {user && view === 'client' && (
           <div className="backdrop-blur-sm bg-white/90 rounded-xl p-8">
             <div className="flex justify-between items-center mb-8">
               <h2 className="text-2xl font-bold text-gray-900">My Complaints</h2>
@@ -218,29 +243,18 @@ function App() {
 
             {isFormOpen && (
               <div className="mb-8">
-                <ComplaintForm onSubmit={(newComplaint) => {
-                  setComplaints([...complaints, {
-                    ...newComplaint,
-                    id: `${complaints.length + 1}`,
-                    status: 'pending',
-                    createdAt: new Date().toISOString(),
-                    updatedAt: new Date().toISOString(),
-                    messages: [],
-                    studentId: user.id
-                  }]);
-                  setIsFormOpen(false);
-                }} />
+                <ComplaintForm user={user} />
               </div>
             )}
 
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {complaints
-                .filter(complaint => complaint.studentId === user.id)
+                // .filter((complaint) => complaint.studentId === user.id)
                 .map((complaint) => (
                   <ComplaintCard
                     key={complaint.id}
                     complaint={complaint}
-                    userRole="student"
+                    userRole="client"
                     onSendMessage={handleSendMessage}
                   />
                 ))}

@@ -11,22 +11,21 @@ export interface Message {
 }
 
 export interface Complaint {
-  id: string;
+  id: int;
   title: string;
   description: string;
   category: string;
-  status: ComplaintStatus;
-  priority: ComplaintPriority;
-  createdAt: string;
-  updatedAt: string;
-  studentId: string;
-  messages: Message[];
+  ai_response: string;
+  admin_response: string;
+  user_id: number;
+  department_id: number | null;
 }
 
 export interface User {
   id: string;
   username: string;
   role: UserRole;
+  access_token:string;
 }
 
 export interface LoginCredentials {
