@@ -1,10 +1,13 @@
 import { ArrowRight, GraduationCap, TicketCheck } from 'lucide-react';
+import { useNavigate } from 'react-router-dom'; // Added import
 
 interface HomePageProps {
   onRoleSelect: () => void;
 }
 
 export default function HomePage({ onRoleSelect }: HomePageProps) {
+  const navigate = useNavigate(); // Added useNavigate hook
+
   return (
     <div className="space-y-12">
 
@@ -18,14 +21,14 @@ export default function HomePage({ onRoleSelect }: HomePageProps) {
         </p>
         <div className="flex justify-center">
           <button
-            onClick={() => onRoleSelect()}
-            className="px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white text-xl font-semibold rounded-full hover:from-cyan-600 hover:to-blue-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+            onClick={() => navigate('/login')} // Updated to navigate to /login
+            className="px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white text-xl font-semibold rounded-full hover:from-cyan-600 hover:to-blue-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl "
           >
             Login In
           </button>
         </div>
       </div>
-      <div className='grid grid-cols-3  shadow-xl rounded-2xl'>
+      <div className='grid grid-cols-3  shadow-xl rounded-2xl border border-blue-800/30'>
 
         <div className="backdrop-blur-sm bg-white/10 rounded-xl p-8 col-span-2 ">
           <h2 className="text-2xl font-bold  mb-4">Our Vision</h2>
@@ -39,7 +42,7 @@ export default function HomePage({ onRoleSelect }: HomePageProps) {
       </div>
 
 
-      <div className='grid grid-cols-3 rounded-2xl shadow-2xl'>
+      <div className='grid grid-cols-3 rounded-2xl shadow-2xl border border-blue-800/30'>
         <div className="backdrop-blur-sm bg-white/10  p-8 border border-white/30 rounded-xl">
           <img src='https://apvegypt-tray.com/images/1658422953944.jpeg' className='h-full rounded-xl  ' />
         </div>
@@ -52,7 +55,7 @@ export default function HomePage({ onRoleSelect }: HomePageProps) {
       </div>
       <div className="space-y-6">
 
-        <div className="backdrop-blur-sm bg-white/10 rounded-xl p-8 shadow-2xl">
+        <div className="backdrop-blur-sm bg-white/10 rounded-xl p-8 shadow-2xl border border-blue-800/30">
 
           <h3 className="text-2xl font-bold text-center mb-4">Ticketing system </h3>
           <p className=" text-center">
@@ -61,7 +64,7 @@ export default function HomePage({ onRoleSelect }: HomePageProps) {
             {/* Get Started Button */}
             <div className="flex justify-center">
               <button
-                onClick={() => onRoleSelect()}
+                onClick={() => navigate('/login')} // Updated to navigate to /login
                 className="px-8 mt-4 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white text-xl font-semibold rounded-full hover:from-cyan-600 hover:to-blue-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex"
               >
                 submit ticket

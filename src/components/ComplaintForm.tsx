@@ -85,7 +85,7 @@ export default function ComplaintForm({ user }: ComplaintFormProps) {
           suggestSolution: data.response,
           title: data.title
         },
-        id:data.id
+        id: data.id
       };
 
       setComplaintTicket(ticketResponse);
@@ -95,7 +95,7 @@ export default function ComplaintForm({ user }: ComplaintFormProps) {
     }
   };
 
-  const handleFeedbackSubmit = async (complain_id: number,satisfaction:string) => {
+  const handleFeedbackSubmit = async (complain_id: number, satisfaction: string) => {
     // Here you would typically send the feedback to your backend
     const payload = {
       satisfaction: satisfaction
@@ -205,7 +205,13 @@ export default function ComplaintForm({ user }: ComplaintFormProps) {
                 </div>
                 <div className="col-span-2">
                   <p className="font-semibold">Suggested Solution:</p>
-                  <p className="text-gray-700">{complaintTicket.complaint.suggestSolution}</p>
+                  <div className="col-span-2">
+                    <p
+                      className="text-gray-700 whitespace-pre-wrap"
+                    >
+                      {complaintTicket.complaint.suggestSolution}
+                    </p>
+                  </div>
                 </div>
 
               </div>
@@ -234,7 +240,7 @@ export default function ComplaintForm({ user }: ComplaintFormProps) {
                 <div className="flex space-x-4 justify-center">
                   <button
                     type="button"
-                    onClick={() => handleFeedbackSubmit(complaintTicket.id,"unsatisfied")} 
+                    onClick={() => handleFeedbackSubmit(complaintTicket.id, "unsatisfied")}
                     className={`px-4 py-2 rounded-md ${isSatisfied === true
                       ? 'bg-cyan-600 text-white'
                       : 'bg-green-500   text-white hover:bg-green-700'
@@ -286,7 +292,7 @@ export default function ComplaintForm({ user }: ComplaintFormProps) {
                     {dissatisfactionCategory && dissatisfactionFeedback && (
                       <button
                         type="button"
-                        onClick={() => handleFeedbackSubmit(complaintTicket.id,"unsatisfied")} 
+                        onClick={() => handleFeedbackSubmit(complaintTicket.id, "unsatisfied")}
                         className="w-full mt-4 py-2 px-4 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors duration-200"
                       >
                         Submit Feedback
