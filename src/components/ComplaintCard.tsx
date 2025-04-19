@@ -18,10 +18,10 @@ export default function ComplaintCard({ complaint, userRole, onView }: Complaint
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className="bg-slate-50 rounded-lg shadow p-6 hover:shadow-md transition-shadow border-slate-200 border">
+    <div className="bg-slate-50 rounded-lg shadow p-6 hover:shadow-md transition-shadow border-blue-400 border">
       <div className="flex justify-between items-start mb-4">
-        <h3 className="text-lg font-semibold text-gray-900">{complaint.title}</h3>
-        <span className={`px-3 py-1 rounded-full text-sm font-medium ${statusColors[complaint.status]}`}>
+        <h3 className="text-lg font-semibold text-gray-900 truncate">{complaint.title}</h3>
+        <span className={`px-3 py-1 rounded-full text-sm font-medium truncate ${statusColors[complaint.status]}`}>
           {complaint.category}
         </span>
       </div>
