@@ -1,6 +1,6 @@
 export type ComplaintStatus = 'pending' | 'in-progress' | 'resolved';
 export type ComplaintPriority = 'low' | 'medium' | 'high';
-export type UserRole = 'student' | 'admin';
+export type UserRole = 'client' | 'admin';
 
 export interface Message {
   id: string;

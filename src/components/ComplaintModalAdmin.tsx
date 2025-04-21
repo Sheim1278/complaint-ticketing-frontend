@@ -138,7 +138,7 @@ export default function ComplaintModalAdmin({ isOpen, onClose, complaint, user }
 
                     <div>
                         <h4 className="text-sm font-semibold text-gray-700 mb-1">Our Response:</h4>
-                        {complaint.admin_response !=="Pending" && (<p>
+                        {complaint.admin_response !=="PENDING" && (<p>
                             {complaint.admin_response}
                         </p>)}
                         <textarea

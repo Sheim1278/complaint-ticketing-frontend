@@ -81,7 +81,7 @@ export default function ComplaintModal({ isOpen, onClose, complaint, user }: Com
                         </div>
                     )}
 
-                    {complaint.admin_response !== "Pending" && (<div >
+                    {complaint.admin_response !== "PENDING" && (<div >
                         <h4 className="text-sm font-semibold text-gray-700 mb-1">Human Response:</h4>
                         <p className="text-gray-600">{complaint.admin_response}</p>
                     </div>)

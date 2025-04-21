@@ -1,28 +1,33 @@
 import { useState } from 'react';
-import { User, Key, Mail } from 'lucide-react';
+import { User, Key } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 interface LoginFormProps {
   onLogin: (username: string, password: string) => void;
+  backendError?: string;
 }
 
-export default function LoginForm({ onLogin }: LoginFormProps) {
+export default function LoginForm({ onLogin, backendError }: LoginFormProps) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [validationError, setValidationError] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!username || !password) {
-      setError('Please fill in all fields');
+      setValidationError('Please fill in all fields');
       return;
     }
+    setValidationError(''); // Clear validation error before submission
     onLogin(username, password);
   };
+
+  const errorMessage = validationError || backendError;
 
   return (
     <div className="flex items-center justify-center pt-8">
       <div className="max-w-md w-full space-y-8">
-        <div className="backdrop-blur-md bg-white/10 p-8 rounded-2xl shadow-xl border border-blue-800/30">
+        <div className="backdrop-blur-md bg-white/25 p-8 rounded-2xl shadow-xl text-white"> 
           <div className="flex flex-col items-center mb-8">
             <div className="w-20 h-20 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center mb-4">
               <User className="h-10 w-10 " />
@@ -36,9 +41,9 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
             </p>
           </div>
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-            {error && (
-              <div className="text-red-300 text-sm text-center bg-red-900/20 py-2 rounded-lg">
-                {error}
+            {errorMessage && (
+              <div className="text-white text-sm text-center from-red-500 to-red-700 bg-gradient-to-t py-3 px-4 rounded-lg border  shadow-sm animate-fadeIn">
+                <p className="font-medium">{errorMessage}</p>
               </div>
             )}
 
@@ -95,10 +100,16 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
               </button>
             </div>
 
-            <div className="text-center mt-4">
-              <a href="#" className="text-sm  hover:text-blue-700">
+            <div className="text-center mt-4 space-y-3">
+              <a href="#" className="text-sm hover:text-blue-700">
                 Forgot your password?
               </a>
+              <div className="text-sm">
+                Don't have an account?{' '}
+                <Link to="/signup" className="text-blue-600 hover:text-blue-700 font-medium">
+                  Sign up
+                </Link>
+              </div>
             </div>
 
           </form>

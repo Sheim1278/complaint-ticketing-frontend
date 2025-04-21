@@ -1,6 +1,6 @@
 import { Bell, Menu, LogOut } from 'lucide-react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 import type { User, Complaint, Message } from '../types';
 
@@ -22,18 +22,53 @@ export default function Header({ user, onLogout }: HeaderProps) {
             </h1>
           </div>
 
-          {user && (
+          <div className="flex items-center space-x-4">
+            <Link
+              to="/"
+              className="text-white hover:bg-gray-700 px-4 py-2 rounded-lg font-extrabold"
+            >
+              Home
+            </Link>
+            {user && user.role !== 'client' &&
+              <Link
+                to="/admin"
+                className="text-white hover:bg-gray-700 px-4 py-2 rounded-lg font-extrabold"
+              >
+                Dashboard
+              </Link>
+            }
+            {user && user.role === "client" && (
+              <Link
+                to="/complains"
+                className="text-white hover:bg-gray-700 px-4 py-2 rounded-lg font-extrabold"
+              >
+                Complaints
+              </Link>
+            )}
+          </div>
+
+          {user ? (
+
             <div className="flex items-center space-x-2">
               <span className="text-sm text-white">
                 Welcome, {user.username}
               </span>
               <button
                 onClick={onLogout}
-                className="p-2 rounded-full hover:bg-gray-500 text-white flex items-center ms-9"
+                className="p-2 rounded-full hover:bg-gray-700 text-white flex items-center ms-9"
               >
                 Log Out
                 <LogOut className="h-5 w-5" />
               </button>
+            </div>
+          ) : (
+            <div className="flex items-center space-x-4">
+              <Link to="/login" className="text-white  hover:bg-gray-700 px-4 py-2 rounded-lg border border-slate-400">
+                Login
+              </Link>
+              <Link to="/signup" className="text-white  hover:bg-gray-700 px-4 py-2 rounded-lg border border-slate-400">
+                Sign Up
+              </Link>
             </div>
           )}
         </div>
