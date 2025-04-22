@@ -158,16 +158,16 @@ function App() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br bg-[#00000e] flex items-center justify-center">
-        <div className="text-white text-xl">Loading...</div>
+      <div className="min-h-screen bg-gradient-to-br flex items-center justify-center">
+        <div className=" text-xl">Loading...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br bg-[#00000e]">
+    <div className="min-h-screen bg-gradient-to-br ">
       <Header user={user} onLogout={handleLogout} />
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 ">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-2 py-8 ">
         <Routes>
           <Route path="/" element={<HomePage user={user} />} />
           <Route
@@ -198,7 +198,7 @@ function App() {
             path="/admin"
             element={
               user && user.role !== 'client' ? (
-                <div className="backdrop-blur-sm bg-white/25 text-white rounded-xl p-8">
+                <div className="backdrop-blur-sm bg-gray-200  rounded-xl p-8">
                   <AdminDashboard
                     complaints={complaints}
                     user={user}
@@ -222,12 +222,12 @@ function App() {
             path="/complains"
             element={
               user && user.role === 'client' ? (
-                <div className="backdrop-blur-sm bg-white/25 text-white rounded-xl p-8">
+                <div className="backdrop-blur-sm bg-gray-200  rounded-xl p-8">
                   <div className="flex justify-between items-center mb-8">
                     <h2 className="text-2xl font-bold ">My Complaints</h2>
                     <Link
                       to="/new-complaint"
-                      className="px-4 py-2 bg-gradient-to-r from-cyan-600 to-blue-600 text-white rounded-md hover:from-cyan-700 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                      className="px-4 py-2  text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                     >
                       New Complaint
                     </Link>

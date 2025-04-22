@@ -37,7 +37,7 @@ export default function SignupForm({ onSignup }: SignupFormProps) {
   return (
     <div className="flex items-center justify-center pt-8 ">
       <div className="max-w-md w-full space-y-8">
-        <div className="backdrop-blur-md bg-white/25 text-white p-8 rounded-2xl shadow-xl ">
+        <div className="backdrop-blur-md bg-gray-200  p-8 rounded-2xl shadow-xl ">
           <div className="flex flex-col items-center mb-8">
             <div className="w-20 h-20 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center mb-4">
               <User className="h-10 w-10" />
@@ -52,7 +52,7 @@ export default function SignupForm({ onSignup }: SignupFormProps) {
           </div>
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
             {(validationError || backendError) && (
-              <div className="text-white text-sm text-center from-red-500 to-red-700 bg-gradient-to-t py-3 px-4 rounded-lg border  shadow-sm animate-fadeIn">
+              <div className=" text-sm text-center from-red-500 to-red-700 bg-gradient-to-t py-3 px-4 rounded-lg border  shadow-sm animate-fadeIn">
                 {validationError || backendError}
               </div>
             )}
@@ -73,7 +73,7 @@ export default function SignupForm({ onSignup }: SignupFormProps) {
                     required
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    className="block w-full pl-10 pr-3 py-2 border border-blue-500 rounded-lg bg-white/10 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent backdrop-blur-sm"
+                    className="block w-full pl-10 pr-3 py-2 border border-blue-500 rounded-lg  focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent "
                     placeholder="Choose a username"
                   />
                 </div>
@@ -94,7 +94,7 @@ export default function SignupForm({ onSignup }: SignupFormProps) {
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="block w-full pl-10 pr-3 py-2 border border-blue-500 rounded-lg bg-white/10 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent backdrop-blur-sm"
+                    className="block w-full pl-10 pr-3 py-2 border border-blue-500 rounded-lg  focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent "
                     placeholder="Enter your email"
                   />
                 </div>
@@ -115,7 +115,7 @@ export default function SignupForm({ onSignup }: SignupFormProps) {
                     required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="block w-full pl-10 pr-3 py-2 border border-blue-500 rounded-lg bg-white/10 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent backdrop-blur-sm"
+                    className="block w-full pl-10 pr-3 py-2 border border-blue-500 rounded-lg  focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent "
                     placeholder="Create a password"
                   />
                 </div>
@@ -136,7 +136,7 @@ export default function SignupForm({ onSignup }: SignupFormProps) {
                     required
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="block w-full pl-10 pr-3 py-2 border border-blue-500 rounded-lg bg-white/10 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent backdrop-blur-sm"
+                    className="block w-full pl-10 pr-3 py-2 border border-blue-500 rounded-lg  focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent "
                     placeholder="Confirm your password"
                   />
                 </div>

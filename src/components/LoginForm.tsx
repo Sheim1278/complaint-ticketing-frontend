@@ -27,7 +27,7 @@ export default function LoginForm({ onLogin, backendError }: LoginFormProps) {
   return (
     <div className="flex items-center justify-center pt-8">
       <div className="max-w-md w-full space-y-8">
-        <div className="backdrop-blur-md bg-white/25 p-8 rounded-2xl shadow-xl text-white"> 
+        <div className="backdrop-blur-md bg-gray-200 p-8 rounded-2xl shadow-xl "> 
           <div className="flex flex-col items-center mb-8">
             <div className="w-20 h-20 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center mb-4">
               <User className="h-10 w-10 " />
@@ -42,7 +42,7 @@ export default function LoginForm({ onLogin, backendError }: LoginFormProps) {
           </div>
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
             {errorMessage && (
-              <div className="text-white text-sm text-center from-red-500 to-red-700 bg-gradient-to-t py-3 px-4 rounded-lg border  shadow-sm animate-fadeIn">
+              <div className=" text-sm text-center from-red-500 to-red-700 bg-gradient-to-t py-3 px-4 rounded-lg border  shadow-sm animate-fadeIn">
                 <p className="font-medium">{errorMessage}</p>
               </div>
             )}
@@ -63,7 +63,7 @@ export default function LoginForm({ onLogin, backendError }: LoginFormProps) {
                     required
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    className="block w-full pl-10 pr-3 py-2 border border-blue-500  rounded-lg bg-white/10   focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent backdrop-blur-sm"
+                    className="block w-full pl-10 pr-3 py-2 border border-blue-500  rounded-lg    focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent "
                     placeholder="Enter your username"
                   />
                 </div>
@@ -84,7 +84,7 @@ export default function LoginForm({ onLogin, backendError }: LoginFormProps) {
                     required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="block w-full pl-10 pr-3 py-2  border-blue-500 border rounded-lg bg-white/10   focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent backdrop-blur-sm"
+                    className="block w-full pl-10 pr-3 py-2  border-blue-500 border rounded-lg    focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent "
                     placeholder="Enter your password"
                   />
                 </div>

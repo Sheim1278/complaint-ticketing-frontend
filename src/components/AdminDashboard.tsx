@@ -211,7 +211,7 @@ export default function AdminDashboard({ InitialComplaints, userRole = "client",
   const renderDashboardView = () => (
     <>
       <div id="stats-section" className="grid grid-cols-1 md:grid-cols-4 gap-4  ">
-        <div className="bg-white/25 p-6 rounded-lg shadow">
+        <div className="bg-white p-6 rounded-lg shadow">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium ">Total Complaints</p>
@@ -223,11 +223,11 @@ export default function AdminDashboard({ InitialComplaints, userRole = "client",
           </div>
         </div>
 
-        <div className="bg-white/25 p-6 rounded-lg shadow">
+        <div className="bg-white p-6 rounded-lg shadow">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-white">Responded Complains</p>
-              <p className="mt-1 text-3xl font-semibold text-white">{metrics.responded_complaints} <br></br> Complaints</p>
+              <p className="text-sm font-medium ">Responded Complains</p>
+              <p className="mt-1 text-3xl font-semibold ">{metrics.responded_complaints} <br></br> Complaints</p>
             </div>
             <div className="p-3 bg-blue-50 rounded-full">
               <ThumbsUp className="h-6 w-6 text-green-600" />
@@ -235,11 +235,11 @@ export default function AdminDashboard({ InitialComplaints, userRole = "client",
           </div>
         </div>
 
-        <div className="bg-white/25 p-6 rounded-lg shadow">
+        <div className="bg-white p-6 rounded-lg shadow">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-white">Pending Complaints</p>
-              <p className="mt-1 text-3xl font-semibold text-white">{metrics.pending_complaints} <br></br> Complaints</p>
+              <p className="text-sm font-medium ">Pending Complaints</p>
+              <p className="mt-1 text-3xl font-semibold ">{metrics.pending_complaints} <br></br> Complaints</p>
             </div>
             <div className="p-3 bg-green-50 rounded-full">
               <Hourglass className="h-6 w-6 text-blue-600" />
@@ -247,11 +247,11 @@ export default function AdminDashboard({ InitialComplaints, userRole = "client",
           </div>
         </div>
 
-        <div className="bg-white/25 p-6 rounded-lg shadow">
+        <div className="bg-white p-6 rounded-lg shadow">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-white">Average Response Time</p>
-              <p className="mt-1 text-3xl font-semibold text-white">{metrics.avg_response_time.toFixed(2)} <br></br>  Minutes</p>
+              <p className="text-sm font-medium ">Average Response Time</p>
+              <p className="mt-1 text-3xl font-semibold ">{metrics.avg_response_time.toFixed(2)} <br></br>  Minutes</p>
             </div>
             <div className="p-3 bg-orange-50 rounded-full">
               <Clock className="h-6 w-6 text-blue-600" />
@@ -262,7 +262,7 @@ export default function AdminDashboard({ InitialComplaints, userRole = "client",
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {Object.entries(graphUrls).map(([key, url]) => (
-          <div key={key} className="bg-white/25 rounded-lg shadow p-2">
+          <div key={key} className="bg-white rounded-lg shadow p-2">
             <RetryableIframe
               src={BASE_URI + url}
               title={key}
@@ -289,13 +289,13 @@ export default function AdminDashboard({ InitialComplaints, userRole = "client",
         <>
           {user.role === "admin" ? (
             <>
-              <div className="flex flex-col space-y-4">
+              <div className="flex flex-col space-y-4 ">
                 <div className="flex justify-between items-center">
                   <div className="flex space-x-4 border-b">
                     <button
                       className={`py-2 px-4 ${activeTab === 'dashboard'
                           ? 'border-b-2 border-blue-500 text-blue-600 hover:text-blue-400'
-                          : 'text-white-500 hover:text-white/80'
+                          : '-500 hover:/80'
                         }`}
                       onClick={() => setActiveTab('dashboard')}
                     >
@@ -304,7 +304,7 @@ export default function AdminDashboard({ InitialComplaints, userRole = "client",
                     <button
                       className={`py-2 px-4 ${activeTab === 'complaints'
                           ? 'border-b-2 border-blue-500 text-blue-600 hover:text-blue-400'
-                          : 'text-white-500 hover:text-white/80'
+                          : '-500 hover:/80'
                         }`}
                       onClick={() => setActiveTab('complaints')}
                     >
@@ -317,7 +317,7 @@ export default function AdminDashboard({ InitialComplaints, userRole = "client",
                         type="datetime-local"
                         value={startDate}
                         onChange={(e) => setStartDate(e.target.value)}
-                        className="border rounded-md p-2 bg-white/25"
+                        className="border rounded-md p-2 bg-white"
                         placeholder="Start Date"
                       />
                       <span>to</span>
@@ -325,7 +325,7 @@ export default function AdminDashboard({ InitialComplaints, userRole = "client",
                         type="datetime-local"
                         value={endDate}
                         onChange={(e) => setEndDate(e.target.value)}
-                        className="border rounded-md p-2 bg-white/25"
+                        className="border rounded-md p-2 bg-white"
                         placeholder="End Date"
                       />
                     </div>

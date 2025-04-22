@@ -131,33 +131,28 @@ export default function ComplaintForm({ user,OnFormSubmit }: ComplaintFormProps)
         <BackwardIcon className="h-5 w-5 me-2" aria-hidden="true" />
         back
       </button>
-      <form onSubmit={handleSubmit} className="space-y-8 bg-white/25 p-6 rounded-2xl shadow-xl text-white">
+      <form onSubmit={handleSubmit} className="space-y-8 bg-gray-200 p-6 rounded-2xl shadow-xl text-gray-800">
         {/* Client Information Section */}
-
-
-
 
         {/* Complaint Information Section */}
         <div className="space-y-6">
-          <h3 className="text-lg font-medium  border-b border-blue-600 pb-2">Complaint Information</h3>
+          <h3 className="text-lg font-medium border-b border-blue-600 pb-2">Complaint Information</h3>
           {!complaintTicket && <div className="space-y-6">
             <div>
-              <label htmlFor="category" className="block text-sm font-medium ">
+              <label htmlFor="category" className="block text-sm font-medium">
                 Title
               </label>
               <input
                 id="title"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="mt-1 block w-full rounded-md border-blue-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2 focus:outline-blue-500 bg-white/25"
+                className="mt-1 block w-full rounded-md border-blue-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2 focus:outline-blue-500 bg-white"
                 required
-              >
-
-              </input>
+              />
             </div>
 
             <div>
-              <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="description" className="block text-sm font-medium">
                 Description
               </label>
               <textarea
@@ -165,18 +160,17 @@ export default function ComplaintForm({ user,OnFormSubmit }: ComplaintFormProps)
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 rows={4}
-                className="mt-1 p-2 block w-full rounded-md border-blue-300 border shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-blue-500 bg-white/25"
+                className="mt-1 p-2 block w-full rounded-md border-blue-300 border shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-blue-500 bg-white"
                 required
               />
             </div>
-
           </div>}
         </div>
 
         {!complaintTicket && <button
           type="submit"
           disabled={isSubmitting}
-          className={`ms-auto flex justify-center py-2 px-6 border border-transparent rounded-md shadow-sm text-sm font-medium ${
+          className={`ms-auto flex justify-center py-2 px-6 border border-transparent rounded-md shadow-sm text-sm text-white font-medium ${
             isSubmitting 
               ? 'bg-blue-400 cursor-not-allowed' 
               : 'bg-blue-600 hover:bg-blue-700'
@@ -189,7 +183,7 @@ export default function ComplaintForm({ user,OnFormSubmit }: ComplaintFormProps)
         {/* Ticket Details Section */}
         {complaintTicket && (
           <div className="space-y-8">
-            <div id="ticket-details" className="p-6 border rounded-lg bg-white/25">
+            <div id="ticket-details" className="p-6 border rounded-lg bg-gray-100">
               <div className="space-y-4">
                 <h2 className="text-2xl font-bold ">Ticket Details</h2>
                 <div className="grid grid-cols-2 gap-4">
@@ -240,7 +234,7 @@ export default function ComplaintForm({ user,OnFormSubmit }: ComplaintFormProps)
                 <div className="flex justify-end">
                   <button
                     onClick={downloadTicketImage}
-                    className="mt-4 px-4 py-2 bg-green-600  rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                    className="mt-4 px-4 py-2 text-white bg-green-600  rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                   >
                     Download Ticket Image
                   </button>
@@ -250,7 +244,7 @@ export default function ComplaintForm({ user,OnFormSubmit }: ComplaintFormProps)
             </div>
 
             {/* Solution and Satisfaction Section */}
-            <div className="p-6 border rounded-lg bg-white/25">
+            <div className="p-6 border rounded-lg bg-gray-100">
               <div className="space-y-4">
                 {!feedbackSubmitted && <div className="bg-yellow-100 p-4 rounded-lg">
                   <p className="text-yellow-800 font-medium">Important Note:</p>
@@ -325,7 +319,7 @@ export default function ComplaintForm({ user,OnFormSubmit }: ComplaintFormProps)
                     </div>
                   )}
                   {feedbackSubmitted && (
-                    <div className="mt-4 p-4 bg-green-800  rounded-md">
+                    <div className="mt-4 p-4 bg-green-300  rounded-md">
                       Thank you for your feedback. We will use it to improve our services.
                     </div>
                   )}

@@ -18,10 +18,10 @@ export default function ComplaintCard({ complaint, userRole, onView }: Complaint
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className="bg-white/25 rounded-lg shadow p-6 hover:shadow-md transition-shadow  text-white">
+    <div className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-shadow  =">
       <div className="flex justify-between items-start mb-4">
         <h3 className="text-lg font-semibold  truncate">{complaint.title}</h3>
-        <span className={`px-3 py-1 rounded-full text-sm font-medium truncate border ${statusColors[complaint.status]}`}>
+        <span className={`px-3 py-1 rounded-full text-sm font-medium truncate border border-blue-600`}>
           {complaint.category}
         </span>
       </div>
@@ -49,7 +49,7 @@ export default function ComplaintCard({ complaint, userRole, onView }: Complaint
       <div className="mt-4 flex justify-end">
         <button
           onClick={() => onView(complaint)}
-          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-[#41404a] hover:bg-[#41404a]/90 rounded-md shadow-sm"
+          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-blue-600 text-white hover:bg-blue-700 rounded-md shadow-sm"
         >
           <Eye className="w-4 h-4" />
           View
