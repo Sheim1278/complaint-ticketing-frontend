@@ -46,7 +46,7 @@ export default function HomePage({ user }: HomePageProps) {
           </button>}
         </div>
       </div>
-      <div className='grid grid-cols-3  shadow-xl rounded-2xl'>
+      <div className='grid grid-cols-3 border-2 border-cyan-500  shadow-xl rounded-2xl'>
 
         <div className="backdrop-blur-sm bg-gray-200 rounded-l-2xl p-8 col-span-2 ">
           <h2 className="text-2xl font-bold  mb-4">Our Vision</h2>
@@ -54,17 +54,17 @@ export default function HomePage({ user }: HomePageProps) {
             To build an innovative, consumer-centric platform that empowers individuals by delivering exceptional service experiences, facilitating clear and effective communication, and ensuring seamless, user-friendly access to a wide range of essential support services. We aim to create a connected ecosystem that supports every consumer's needs, fosters satisfaction, and drives long-term engagement and success.
           </p>
         </div>
-        <div className="backdrop-blur-sm bg-gray-200 p-8   rounded-r-2xl">
+        <div className="backdrop-blur-sm bg-gray-200 p-8   rounded-r-2xl ">
           <img src='https://t4.ftcdn.net/jpg/02/19/97/89/360_F_219978944_Q0f2jy0m9RwbIMNqIgEVRGJXdS2DwfbD.jpg' className='h-full rounded-xl  backdrop-blur-md ' />
         </div>
       </div>
 
 
-      <div className='grid grid-cols-3 rounded-r-2xl shadow-xl'>
-        <div className="backdrop-blur-sm bg-gray-200 p-8  rounded-l-2xl">
+      <div className='grid grid-cols-3 rounded-2xl shadow-xl border-2 border-cyan-500'>
+        <div className="backdrop-blur-sm bg-gray-200 p-8  rounded-l-2xl  ">
           <img src='https://apvegypt-tray.com/images/1658422953944.jpeg' className='h-full rounded-xl  ' />
         </div>
-        <div className="backdrop-blur-sm bg-gray-200 rounded-r-2xl p-8 col-span-2">
+        <div className="backdrop-blur-sm bg-gray-200 rounded-r-2xl p-8 col-span-2 ">
           <h2 className="text-2xl font-bold  mb-4">Our Mission</h2>
           <p className="">
             We aim to empower consumers by providing a centralized and intuitive system for managing their service needs, streamlining the resolution of issues with efficiency and transparency, and fostering a responsive, supportive environment that prioritizes satisfaction, trust, and long-term engagement. Our goal is to enhance every aspect of the consumer experience through innovation, accessibility, and exceptional support.
@@ -73,7 +73,7 @@ export default function HomePage({ user }: HomePageProps) {
       </div>
       <div className="space-y-6">
 
-        <div className="backdrop-blur-sm bg-gray-200 rounded-2xl p-8 shadow-2xl ">
+        <div className="backdrop-blur-sm bg-gray-200 rounded-2xl p-8 shadow-2xl border-2 border-cyan-500">
 
           <h3 className="text-2xl font-bold text-center  mb-4">Ticketing system </h3>
           <p className=" text-center">

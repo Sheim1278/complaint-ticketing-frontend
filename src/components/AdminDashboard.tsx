@@ -211,7 +211,7 @@ export default function AdminDashboard({ InitialComplaints, userRole = "client",
   const renderDashboardView = () => (
     <>
       <div id="stats-section" className="grid grid-cols-1 md:grid-cols-4 gap-4  ">
-        <div className="bg-white p-6 rounded-lg shadow">
+        <div className="bg-white p-6 rounded-lg shadow border-2 border-cyan-500">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium ">Total Complaints</p>
@@ -223,7 +223,7 @@ export default function AdminDashboard({ InitialComplaints, userRole = "client",
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow">
+        <div className="bg-white p-6 rounded-lg shadow border-2 border-cyan-500">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium ">Responded Complains</p>
@@ -235,7 +235,7 @@ export default function AdminDashboard({ InitialComplaints, userRole = "client",
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow">
+        <div className="bg-white p-6 rounded-lg shadow border-2 border-cyan-500">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium ">Pending Complaints</p>
@@ -247,7 +247,7 @@ export default function AdminDashboard({ InitialComplaints, userRole = "client",
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow">
+        <div className="bg-white p-6 rounded-lg shadow border-2 border-cyan-500">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium ">Average Response Time</p>
@@ -262,7 +262,7 @@ export default function AdminDashboard({ InitialComplaints, userRole = "client",
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {Object.entries(graphUrls).map(([key, url]) => (
-          <div key={key} className="bg-white rounded-lg shadow p-2">
+          <div key={key} className="bg-white rounded-lg shadow p-2 border-2 border-cyan-500">
             <RetryableIframe
               src={BASE_URI + url}
               title={key}
@@ -295,7 +295,7 @@ export default function AdminDashboard({ InitialComplaints, userRole = "client",
                     <button
                       className={`py-2 px-4 ${activeTab === 'dashboard'
                           ? 'border-b-2 border-blue-500 text-blue-600 hover:text-blue-400'
-                          : '-500 hover:/80'
+                          : 'hover:text-gray-700'
                         }`}
                       onClick={() => setActiveTab('dashboard')}
                     >
@@ -304,7 +304,7 @@ export default function AdminDashboard({ InitialComplaints, userRole = "client",
                     <button
                       className={`py-2 px-4 ${activeTab === 'complaints'
                           ? 'border-b-2 border-blue-500 text-blue-600 hover:text-blue-400'
-                          : '-500 hover:/80'
+                          : ' hover:text-gray-700'
                         }`}
                       onClick={() => setActiveTab('complaints')}
                     >
@@ -317,7 +317,7 @@ export default function AdminDashboard({ InitialComplaints, userRole = "client",
                         type="datetime-local"
                         value={startDate}
                         onChange={(e) => setStartDate(e.target.value)}
-                        className="border rounded-md p-2 bg-white"
+                        className="border-2 border-cyan-500 rounded-md p-2 bg-white"
                         placeholder="Start Date"
                       />
                       <span>to</span>
@@ -325,7 +325,7 @@ export default function AdminDashboard({ InitialComplaints, userRole = "client",
                         type="datetime-local"
                         value={endDate}
                         onChange={(e) => setEndDate(e.target.value)}
-                        className="border rounded-md p-2 bg-white"
+                        className="border-2 border-cyan-500 rounded-md p-2 bg-white"
                         placeholder="End Date"
                       />
                     </div>

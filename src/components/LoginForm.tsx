@@ -27,7 +27,7 @@ export default function LoginForm({ onLogin, backendError }: LoginFormProps) {
   return (
     <div className="flex items-center justify-center pt-8">
       <div className="max-w-md w-full space-y-8">
-        <div className="backdrop-blur-md bg-gray-200 p-8 rounded-2xl shadow-xl "> 
+        <div className="backdrop-blur-md bg-gray-200 p-8 rounded-2xl shadow-xl border-2 border-cyan-500"> 
           <div className="flex flex-col items-center mb-8">
             <div className="w-20 h-20 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center mb-4">
               <User className="h-10 w-10 " />

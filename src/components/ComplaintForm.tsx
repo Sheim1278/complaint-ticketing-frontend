@@ -131,7 +131,7 @@ export default function ComplaintForm({ user,OnFormSubmit }: ComplaintFormProps)
         <BackwardIcon className="h-5 w-5 me-2" aria-hidden="true" />
         back
       </button>
-      <form onSubmit={handleSubmit} className="space-y-8 bg-gray-200 p-6 rounded-2xl shadow-xl text-gray-800">
+      <form onSubmit={handleSubmit} className="space-y-8 bg-gray-200 p-6 rounded-2xl shadow-xl text-gray-800 border-2 border-cyan-500">
         {/* Client Information Section */}
 
         {/* Complaint Information Section */}

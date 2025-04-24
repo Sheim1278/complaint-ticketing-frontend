@@ -37,7 +37,7 @@ export default function SignupForm({ onSignup }: SignupFormProps) {
   return (
     <div className="flex items-center justify-center pt-8 ">
       <div className="max-w-md w-full space-y-8">
-        <div className="backdrop-blur-md bg-gray-200  p-8 rounded-2xl shadow-xl ">
+        <div className="backdrop-blur-md bg-gray-200  p-8 rounded-2xl shadow-xl border-2 border-cyan-500 ">
           <div className="flex flex-col items-center mb-8">
             <div className="w-20 h-20 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center mb-4">
               <User className="h-10 w-10" />
@@ -50,7 +50,7 @@ export default function SignupForm({ onSignup }: SignupFormProps) {
               Create your account
             </p>
           </div>
-          <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+          <form className="mt-8 space-y-6 " onSubmit={handleSubmit}>
             {(validationError || backendError) && (
               <div className=" text-sm text-center from-red-500 to-red-700 bg-gradient-to-t py-3 px-4 rounded-lg border  shadow-sm animate-fadeIn">
                 {validationError || backendError}

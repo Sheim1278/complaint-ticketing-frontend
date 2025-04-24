@@ -18,7 +18,7 @@ export default function ComplaintCard({ complaint, userRole, onView }: Complaint
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-shadow  =">
+    <div className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-shadow  border-2 border-cyan-500">
       <div className="flex justify-between items-start mb-4">
         <h3 className="text-lg font-semibold  truncate">{complaint.title}</h3>
         <span className={`px-3 py-1 rounded-full text-sm font-medium truncate border border-blue-600`}>
