@@ -4,6 +4,7 @@ import { TrendingUp, Clock, ThumbsUp, Hourglass } from 'lucide-react';
 import ComplaintCard from './ComplaintCard';
 import type { Complaint, User } from '../types';
 import ComplaintModalAdmin from './ComplaintModalAdmin';
+import ComplaintModal from './ComplaintModal';
 
 interface AdminDashboardProps {
   InitialComplaints?: Complaint[];
@@ -199,6 +200,31 @@ export default function AdminDashboard({ InitialComplaints, userRole = "client",
         </div>
       </div>
     </div>
+    <ComplaintModal
+                isOpen={isModalOpen}
+                onClose={() => { setModalOpen(false); fetchComplaints(); }}
+                complaint={selectedComplaint}
+                user={user}
+              />
+    </>
+  );
+  const renderComplaintsEmployeeView = () => (
+    <>
+    <div className="space-y-6 mb-12 ">
+      <h3 className="text-lg font-medium ">Recent Complaints</h3>
+      <div className="">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {complaints && complaints.map((complaint) => (
+            <ComplaintCard
+              key={complaint.id}
+              complaint={complaint}
+              userRole={userRole}
+              onView={handleView}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
     <ComplaintModalAdmin
                 isOpen={isModalOpen}
                 onClose={() => { setModalOpen(false); fetchComplaints(); }}
@@ -338,7 +364,8 @@ export default function AdminDashboard({ InitialComplaints, userRole = "client",
           ) : (
             <div className="space-y-6 mb-12">
 
-              {renderComplaintsView()}
+              {renderComplaintsEmployeeView() }
+              
           
             </div>
           )}
